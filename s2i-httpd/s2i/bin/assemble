@@ -22,5 +22,5 @@ if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
 fi
 
 echo "---> Installing application source..."
-cp -Rf /tmp/src/. ${DOCROOT}
+# cp -Rf /tmp/src/* ${DOCROOT}
 

@@ -19,17 +19,15 @@ RUN yum install -y --nodocs --disableplugin=subscription-manager httpd && \
     yum clean all --disableplugin=subscription-manager -y && \
     echo "This is the default index page from the builder image." > ${DOCROOT}/index.html 
 
-RUN sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf && \
-    sed -i "s/User apache/User fred/g" /etc/httpd/conf/httpd.conf && \
-    sed -i "s/Group apache/Group root/g" /etc/httpd/conf/httpd.conf
+RUN sed -i "s/Listen 80/Listen 8080/g" /etc/httpd/conf/httpd.conf 
 
 
 COPY ./s2i/bin/ /usr/libexec/s2i
 
-RUN adduser -u 1001 -g 0 -G apache fred && chown -R 1001:0 ${DOCROOT} && chmod -R g+rwx /run
 
-USER 1001
-
-EXPOSE 8080
+# Note: apache wants to be run as root - it will switch to apache by default
+# RUN adduser -u 1001 -g 0 -G apache fred && chown -R 1001:0 ${DOCROOT} && chmod -R g+rwx /run
+# USER 1001
+# EXPOSE 8080
 
 CMD ["/usr/libexec/s2i/usage"]
