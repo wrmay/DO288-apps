@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo HEY FROM CUSTOM assemble script
+
+/usr/libexec/s2i/assemble
+
+rc=$?
+
+if [ $rc -eq 0 ]
+then
+    echo IT WORKED
+else
+    echo BOOM 
+fi
+
+exit $rc
